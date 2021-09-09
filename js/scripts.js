@@ -24,20 +24,34 @@ let pokemonRepository = (function () {
   function add(pokemon) {
     pokemonList.push(pokemon);
   }
+ 
+  function showDetails(pokemon) {
+    console.log(pokemon);
+  }
+
+  function addListItem(pokemon) {
+    let pokedexList = document.querySelector(".pokemon-list");
+    let listpokemon = document.createElement("li");
+    let button = document.createElement("button");
+    button.innerText = pokemon.name;
+    button.classList.add("button-class");
+    listpokemon.appendChild(button);
+    pokedexList.appendChild(listpokemon);
+    button.addEventListener("click", showDetails);
+  }
 
   return {
     add:add,
-    getAll:getAll
+    getAll:getAll,
+    addListItem:addListItem,
+    showDetails:showDetails
   };
 })();
 
 let newPokemonList = pokemonRepository.getAll();
 
 newPokemonList.forEach (function(pokemon) {
-  document.write(pokemon.name + " (height: " + pokemon.height + ")");
-  if(pokemon.height>=5) {
-    document.write (" - Wow, that's a big Pokemon!" + "<br>");
-  } else {
-    document.write ("<br>");
-  }
+  pokemonRepository.addListItem(pokemon);
 });
+
+
